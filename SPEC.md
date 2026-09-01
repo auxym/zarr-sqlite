@@ -128,7 +128,7 @@ Readers must ignore any record with a key that is not described here.
 | `compatible_flags`    | Yes | Comma-separated list of flag strings. Reserved for future extensions to the store format. |
 | `incompatible_flags`  | Yes | Comma-separated list of flag strings. Reserved for future extensions to the store format. |
 | `created_by`  | No | Arbitrary string describing the software that wrote the file. |
-| `modified_at`  | No | Timestamp indicating when the file was most recently modified in UTC, formatted as a string that conforms to [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339), using an upper-case T to separate the date and time and an upper-case Z to represent the timezone e.g. `1999-12-31T23:59:59.999Z`. Note that this format is natively understood as a "time-value" by SQLite. |
+| `modified_at`  | No | Timestamp indicating when the file was most recently modified. |
 
 Readers must reject files whose major version is unsupported, as specified by
 the `sqlitestore_version` metadata record. Readers should ignore minor versions
@@ -156,10 +156,20 @@ values of "compatible_flags" and "incompatible_flags" to the empty string
 The `created_by` record is informational. Readers must not use it to determine
 how the file is to be interpreted. The file format must be fully determined by
 the metadata records sqlitestore_version, compatible_flags, and
-incompatible_flags.
+incompatible_flags. Writers are not required to create or update the modified_at
+field. Consequently, readers should not rely on its presence or accuracy.
 
-Writers are not required to create or update the modified_at field. Consequently,
-readers should not rely on its presence or accuracy.
+If present, the `modified_at` timestamp value must be encoded as a string
+conforming to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339), using
+an upper-case `T` to separate the date and time. The `modified_at` timestamp
+value should be expressed in the UTC timezone, indicated by an upper-case `Z`
+terminating the string. For example, `1999-12-31T23:59:59.999Z`.
+
+Readers should interpret a `modified_at` value without explicit timezone
+information as being expressed in the UTC timezone. Readers may treat a
+`modified_at` value that does not conform to RFC 3339 as if the `modified_at`
+metadata were absent.
+
 
 ### Table `zarr`
 
