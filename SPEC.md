@@ -98,12 +98,12 @@ PRAGMA application_id = 0x10b50760
 
 ## Database schema
 
-SQLiteStore files must contain two exactly tables, `zarr_sqlitestore_metadata` and
+SQLiteStore files must contain exactly two tables, `zarr_sqlitestore_metadata` and
 `zarr`. The schema for each table are described in the
 subsections below. Records must not contain NULL values and the table schemas
 should therefore be specified with a `NOT NULL` constraint on each column.
 
-Readers must ignore all other tables present within the file.
+Readers may ignore all other tables present within the file.
 
 ### Table `zarr_sqlitestore_metadata`
 
@@ -249,13 +249,12 @@ given prefix. Throughout this appendix, such operations assume the following
 parameter definitions:
 
 - `:prefix` is the prefix to search for. `:prefix` must respect the following rules:
-    * `:prefix` must not be the empty string (`''`)
     * `:prefix` must end with the slash character (`/`)
     * `:prefix` must not start with a slash character (`/`)
     * `:prefix` must not contain the substring (`//`)
 - `:upper` is derived from `:prefix` by replacing the trailing slash character
   `/` with the character zero (`0`, U+0030). If `:prefix` is the empty string,
-  Then `:upper` is omitted and no upper bound is required.
+  then `:upper` is omitted and no upper bound is required.
 
 Because Zarr keys use `/` exclusively as a path separator, no valid key is equal
 to a non-empty `:prefix`. Furthermore, under the required `BINARY` collating
