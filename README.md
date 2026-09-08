@@ -1,6 +1,6 @@
-# zarr-sqlite
+# zarr-sqlite-python
 
-Experimental implementation of a SQLite-based store for [zarr](https://zarr.dev/) v3, in python.
+SQLite-based single-file store for [zarr](https://zarr.dev/) v3 datasets, in Python.
 
 SQLiteStore provides a single-file storage backend for Zarr. Key advantages over alternative single-file formats (e.g., ZipStore):
 
@@ -16,7 +16,7 @@ import zarr
 
 from zarr_sqlite import SQLiteStore
 
-with SQLiteStore("my_zarr_file.sqlite") as store:
+with SQLiteStore("my_zarr_file.zarrdb") as store:
     root = zarr.create_group(store=store)
     foo = root.create_group('foo')
     bar = foo.create_group('bar')
@@ -33,3 +33,14 @@ for more information.
 The store format is described in the document [SPEC.md](/SPEC.md). This document
 should allow the implementation of SQLiteStore for other programming languages
 or Zarr libraries.
+
+## Status
+
+The version of this library was incremented to v1.0 to reflect the fact that it
+complies with v1 of the SQLiteStore Specification. However, this is a relatively
+new library that has not seen a lot of real-world use yet, therefore users should
+expect the occasional bug, and possibly breaking API changes in future versions,
+if absolutely necessary.
+
+The database format however, defined by the Specification, can be expected to be
+stable.

@@ -1,11 +1,13 @@
 [project]
 name = "zarr-sqlite"
-version = "0.2.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Single-file Zarr v3 dataset store using SQLite"
 readme = "README.md"
 authors = [
     { name = "Francis Thérien", email = "frtherien@gmail.com" }
 ]
+license = "MIT"
+license-files = ["LICENSE.txt",]
 requires-python = ">=3.12"
 dependencies = [
     "zarr>=3.2.1",
@@ -23,6 +25,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "mypy==2.3.0",
     "numpy>=2.3.2",
     "pytest>=8.4.1",
     "pytest-asyncio>=1.1.0",
